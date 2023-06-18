@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sentinel_guard_app/src/api/user_api_service.dart';
 import 'package:sentinel_guard_app/src/models/user.dart';
-import '../auth/auth_api_client.dart';
+import '../auth/auth_api_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    futureUser = AuthApiClient.getUserProfile();
+    futureUser = UserApiService.getUserProfile();
   }
 
   @override

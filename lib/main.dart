@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sentinel_guard_app/src/auth/auth_route_guard.dart';
 import 'src/pages/home_page.dart';
 import 'src/pages/login_page.dart';
 
@@ -8,26 +9,24 @@ Future main() async {
 
   // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
-
+  const MyApp({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SentinelGuard',
       initialRoute: '/home',
-      navigatorObservers: [routeObserver],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       routes: {
-        '/home': (context) => HomePage(),
-        '/login': (context) => LoginPage(),
+        '/home': (context) => routeGuard(const HomePage(), const LoginPage()),
+        '/login': (context) => const LoginPage(),
       },
     );
   }

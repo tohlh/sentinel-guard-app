@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../auth/auth_api_client.dart';
+import '../auth/auth_api_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -52,8 +52,9 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    await AuthApiClient.login(email.text, password.text)
-                        .then((value) => Navigator.pushNamed(context, '/home'));
+                    await AuthApiService.login(email.text, password.text).then(
+                        (value) =>
+                            Navigator.pushReplacementNamed(context, '/home'));
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Login failed")));
