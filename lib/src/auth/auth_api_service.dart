@@ -19,6 +19,25 @@ class AuthApiService {
     }
   }
 
+  static Future register(String name, String email, String password, String cpassword) async {
+    try {
+      final res = await http.post(
+        Uri.parse('$apiBaseUrl/auth/user/register'),
+        body: {
+          "name": name,
+          "email": email, 
+          "password": password, 
+          "passwordConfirmation": cpassword
+        }
+      );
+      final responseBody = jsonDecode(res.body);
+      final token = responseBody['access_token'];
+      AuthService.saveToken(token);
+    } catch (e) {
+      throw Exception('Failed to register');
+    }
+  }
+
   static Future verifyToken() async {
     try {
       final res = await AuthApiClient.authGet('auth/user/verify');

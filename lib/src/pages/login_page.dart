@@ -49,19 +49,42 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await AuthApiService.login(email.text, password.text).then(
-                        (value) =>
-                            Navigator.pushReplacementNamed(context, '/home'));
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Login failed")));
-                  }
-                },
-                child: const Text('Login'),
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await AuthApiService.login(email.text, password.text).then(
+                          (value) =>
+                              Navigator.pushReplacementNamed(context, '/home'));
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Login failed")));
+                    }
+                  },
+                  child: const Text('Login'),
+                ),
               ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('New user?'),
+                    TextButton(child: Text("Register"),
+                    onPressed: () => {
+                      // print("pressed!");
+                      Navigator.pushReplacementNamed(context, '/register')
+                    },)
+                  ],
+                ),
+              ),
+              TextButton(
+                child: Text("Bank Login"),
+                onPressed: () => {
+                  print("pressed!")
+                    // Navigator.pushReplacementNamed(context, '/bank_register')
+                },
+              )
             ],
           ),
         ),

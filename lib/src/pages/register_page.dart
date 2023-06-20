@@ -9,6 +9,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController cpassword = TextEditingController();
@@ -25,6 +26,18 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              TextFormField(
+                controller: name,
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
               TextFormField(
                 controller: email,
                 decoration: const InputDecoration(
@@ -71,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      // await AuthApiService.register(email.text, password.text, cpassword.text).then((value) => Navigator.pushReplacementNamed(context, '/home'));
+                      await AuthApiService.register(name.text, email.text, password.text, cpassword.text).then((value) => Navigator.pushReplacementNamed(context, '/home'));
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Register failed"))
@@ -81,6 +94,27 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: const Text('Register'),
                   ),
               ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Have an account?'),
+                    TextButton(child: Text("Login"),
+                    onPressed: () => {
+                      // print("pressed!");
+                      Navigator.pushReplacementNamed(context, '/login')
+                    },)
+                  ],
+                ),
+              ),
+        
+              TextButton(
+                child: Text("Bank Register"),
+                onPressed: () => {
+                  print("pressed!")
+                    // Navigator.pushReplacementNamed(context, '/bank_register')
+                },
+              )
             ],
             )
           ),
