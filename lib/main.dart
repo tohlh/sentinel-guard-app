@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sentinel_guard_app/src/auth/auth_route_guard.dart';
 import 'src/pages/home_page.dart';
 import 'src/pages/login_page.dart';
+import 'src/pages/register_page.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".env");
@@ -25,8 +26,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/home': (context) => routeGuard(const HomePage(), const LoginPage()),
+        // '/home': (context) => routeGuard(const HomePage(), const LoginPage()),
+        '/home': (context) => const HomePage(),
         '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
       },
     );
   }
