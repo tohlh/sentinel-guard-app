@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sentinel_guard_app/src/auth/auth_api_service.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class BankRegisterPage extends StatefulWidget {
+  const BankRegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<BankRegisterPage> createState() => _BankRegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _BankRegisterPageState extends State<BankRegisterPage> {
   TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
+  TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController cpassword = TextEditingController();
 
@@ -19,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('SentinelGuard User Register'),
+        title: const Text('SentinelGuard Bank Register'),
       ),
       body: Form(
         child: Padding(
@@ -39,13 +39,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
               TextFormField(
-                controller: email,
+                controller: username,
                 decoration: const InputDecoration(
-                  labelText: 'Email',
+                  labelText: 'Username',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
+                    return 'Please enter your username';
                   }
                   return null;
                 },
@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      await AuthApiService.register(name.text, email.text, password.text, cpassword.text).then((value) => Navigator.pushReplacementNamed(context, '/home'));
+                      await AuthApiService.registerBank(name.text, username.text, password.text, cpassword.text).then((value) => Navigator.pushReplacementNamed(context, '/home'));
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Register failed"))
@@ -102,17 +102,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextButton(child: Text("Login"),
                     onPressed: () => {
                       // print("pressed!");
-                      Navigator.pushReplacementNamed(context, '/login')
+                      Navigator.pushReplacementNamed(context, '/login_bank')
                     },)
                   ],
                 ),
               ),
         
               TextButton(
-                child: Text("Bank Register"),
+                child: Text("User Register"),
                 onPressed: () => {
                   // print("pressed!")
-                    Navigator.pushReplacementNamed(context, '/register_bank')
+                    Navigator.pushReplacementNamed(context, '/login')
                 },
               )
             ],

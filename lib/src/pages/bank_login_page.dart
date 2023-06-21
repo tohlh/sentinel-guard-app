@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import '../auth/auth_api_service.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class BankLoginPage extends StatefulWidget {
+  const BankLoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<BankLoginPage> createState() => _BankLoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  TextEditingController email = TextEditingController();
+class _BankLoginPageState extends State<BankLoginPage> {
+  TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
   @override
@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('SentinelGuard User Login'),
+        title: const Text('SentinelGuard Bank Login'),
       ),
       body: Form(
         child: Padding(
@@ -25,13 +25,13 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               TextFormField(
-                controller: email,
+                controller: username,
                 decoration: const InputDecoration(
-                  labelText: 'Email',
+                  labelText: 'Username',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
+                    return 'Please enter your username';
                   }
                   return null;
                 },
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      await AuthApiService.login(email.text, password.text).then(
+                      await AuthApiService.loginBank(username.text, password.text).then(
                           (value) =>
                               Navigator.pushReplacementNamed(context, '/home'));
                     } catch (e) {
@@ -69,20 +69,20 @@ class _LoginPageState extends State<LoginPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('New user?'),
+                    const Text('New bank?'),
                     TextButton(child: Text("Register"),
                     onPressed: () => {
                       // print("pressed!");
-                      Navigator.pushReplacementNamed(context, '/register')
+                      Navigator.pushReplacementNamed(context, '/register_bank')
                     },)
                   ],
                 ),
               ),
               TextButton(
-                child: Text("Bank Login"),
+                child: Text("User Login"),
                 onPressed: () => {
                   // print("pressed!")
-                    Navigator.pushReplacementNamed(context, '/login_bank')
+                    Navigator.pushReplacementNamed(context, '/login')
                 },
               )
             ],
