@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:sentinel_guard_app/src/models/user.dart';
 import 'package:sentinel_guard_app/src/api/user_api_service.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProfilePageState extends State<ProfilePage> {
   late Future<User> futureUser;
 
   @override
