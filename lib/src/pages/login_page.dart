@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                     try {
                       await AuthApiService.login(email.text, password.text).then(
                           (value) =>
-                              Navigator.pushReplacementNamed(context, '/home'));
+                              Navigator.pushReplacementNamed(context, '/layout'));
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Login failed")));

@@ -19,17 +19,24 @@ class AuthApiService {
     }
   }
 
-  static Future register(String name, String email, String password, String cpassword) async {
+  static Future logout() async {
     try {
-      final res = await http.post(
-        Uri.parse('$apiBaseUrl/auth/user/register'),
-        body: {
-          "name": name,
-          "email": email, 
-          "password": password, 
-          "passwordConfirmation": cpassword
-        }
-      );
+      AuthService.removeToken();
+    } catch (e) {
+      throw Exception('Failed to logout');
+    }
+  }
+
+  static Future register(
+      String name, String email, String password, String cpassword) async {
+    try {
+      final res =
+          await http.post(Uri.parse('$apiBaseUrl/auth/user/register'), body: {
+        "name": name,
+        "email": email,
+        "password": password,
+        "passwordConfirmation": cpassword
+      });
       final responseBody = jsonDecode(res.body);
       final token = responseBody['access_token'];
       AuthService.saveToken(token);
@@ -38,17 +45,16 @@ class AuthApiService {
     }
   }
 
-  static Future registerBank(String name, String username, String password, String cpassword) async {
+  static Future registerBank(
+      String name, String username, String password, String cpassword) async {
     try {
-      final res = await http.post(
-        Uri.parse('$apiBaseUrl/auth/bank/register'),
-        body: {
-          "name": name,
-          "username": username, 
-          "password": password, 
-          "passwordConfirmation": cpassword
-        }
-      );
+      final res =
+          await http.post(Uri.parse('$apiBaseUrl/auth/bank/register'), body: {
+        "name": name,
+        "username": username,
+        "password": password,
+        "passwordConfirmation": cpassword
+      });
       final responseBody = jsonDecode(res.body);
       final token = responseBody['apiKey'];
       AuthService.saveToken(token);
@@ -80,7 +86,6 @@ class AuthApiService {
       final message = respondBody['message'];
       return message == 'ok';
     } catch (e) {
-      
       throw Exception('Failed to verify token');
     }
   }
