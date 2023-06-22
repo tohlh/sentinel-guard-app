@@ -51,15 +51,11 @@ class BankListItem extends StatefulWidget {
 }
 
 class _BankListItemState extends State<BankListItem> {
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        () => {
-          Navigator.pushNamed(context, '/bank', arguments: widget.bank)
-        };
-      },
+      onTap: () =>
+          Navigator.pushNamed(context, '/bank', arguments: widget.bank),
       leading: const Icon(Icons.account_balance),
       title: Text(widget.bank.name),
     );

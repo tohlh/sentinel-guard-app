@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:sentinel_guard_app/src/api/auth_api_client.dart';
 import 'package:sentinel_guard_app/src/models/bank.dart';
+import 'package:sentinel_guard_app/src/models/message.dart';
 import 'package:sentinel_guard_app/src/models/user.dart';
 
 class UserApiService {
@@ -21,6 +22,19 @@ class UserApiService {
           .toList();
     } else {
       throw Exception('Failed to load banks list');
+    }
+  }
+
+  static Future<List<Message>> getMessages(String bankCommunicationKey) async {
+    final response =
+        await AuthApiClient.authGet('user/get_messages/$bankCommunicationKey');
+    if (response.statusCode == 200) {
+      final messages = jsonDecode(response.body)['messages']
+          .map<Message>((e) => Message.fromJson(e))
+          .toList();
+      return messages;
+    } else {
+      throw Exception('Failed to load messages');
     }
   }
 }
