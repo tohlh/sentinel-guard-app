@@ -6,7 +6,6 @@ import 'package:sentinel_guard_app/src/models/user.dart';
 class UserApiService {
   static Future<User> getUserProfile() async {
     final response = await AuthApiClient.authGet('auth/user/profile');
-
     if (response.statusCode == 200) {
       return User.fromJson(jsonDecode(response.body));
     } else {
@@ -17,7 +16,9 @@ class UserApiService {
   static Future<List<Bank>> getBanksList() async {
     final response = await AuthApiClient.authGet('user/get_banks');
     if (response.statusCode == 200) {
-      return jsonDecode(response.body).map((e) => Bank.fromJson(e)).toList();
+      return jsonDecode(response.body)['banks']
+          .map<Bank>((e) => Bank.fromJson(e))
+          .toList();
     } else {
       throw Exception('Failed to load banks list');
     }

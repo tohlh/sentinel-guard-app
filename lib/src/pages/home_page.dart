@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sentinel_guard_app/src/models/user.dart';
+import 'package:sentinel_guard_app/src/models/bank.dart';
 import 'package:sentinel_guard_app/src/api/user_api_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,39 +10,58 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future<User> futureUser;
-
-  @override
-  void initState() {
-    super.initState();
-    // const Duration(seconds: 2);
-    futureUser = UserApiService.getUserProfile();
-  }
+  Future<List<Bank>> futureBanks = UserApiService.getBanksList();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.all(32),
         child: Scaffold(
           body: Center(
-            child: FutureBuilder<User>(
-              future: futureUser,
+            child: FutureBuilder<List<Bank>>(
+              future: futureBanks,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Text(snapshot.data!.name);
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return BankListItem(bank: snapshot.data![index]);
+                    },
+                  );
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-                // By default, show a loading spinner.
                 return const CircularProgressIndicator();
               },
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class BankListItem extends StatefulWidget {
+  const BankListItem({Key? key, required this.bank}) : super(key: key);
+  final Bank bank;
+
+  @override
+  State<BankListItem> createState() => _BankListItemState();
+}
+
+class _BankListItemState extends State<BankListItem> {
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () {
+        () => {
+          Navigator.pushNamed(context, '/bank', arguments: widget.bank)
+        };
+      },
+      leading: const Icon(Icons.account_balance),
+      title: Text(widget.bank.name),
     );
   }
 }
