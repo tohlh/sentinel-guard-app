@@ -68,7 +68,7 @@ class UserApiService {
       "bankKey": bankKey,
     });
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 201) {
       throw Exception('Failed to add bank');
     }
   }
