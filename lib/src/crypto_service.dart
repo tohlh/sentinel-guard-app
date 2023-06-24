@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cryptography/cryptography.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sentinel_guard_app/src/api/user_api_service.dart';
+import 'package:sentinel_guard_app/src/models/message.dart';
 
 class CryptoService {
   static Future<SimpleKeyPairData> getKeyPair() async {
@@ -55,5 +56,31 @@ class CryptoService {
     const storage = FlutterSecureStorage();
     await storage.delete(key: 'sentinel-guard-private-key');
     await storage.delete(key: 'sentinel-guard-public-key');
+  }
+
+  static Future<String> decryptMessage(
+      Message encryptedMessage, String bankPublicKey) async {
+    final keyPair = await getKeyPair();
+    final algorithm = X25519();
+    final sharedSecret = await algorithm.sharedSecretKey(
+      keyPair: keyPair,
+      remotePublicKey: SimplePublicKey(base64Decode(bankPublicKey),
+          type: KeyPairType.x25519),
+    );
+
+    final encryptionAlgorithm = AesCtr.with256bits(
+      macAlgorithm: Hmac.sha256(),
+    );
+
+    final secretBox = SecretBox(
+      base64.decode(encryptedMessage.content),
+      nonce: base64.decode(encryptedMessage.nonce),
+      mac: Mac(base64.decode(encryptedMessage.mac)),
+    );
+
+    final decryptedMessage =
+        await encryptionAlgorithm.decrypt(secretBox, secretKey: sharedSecret);
+
+    return utf8.decode(decryptedMessage);
   }
 }
