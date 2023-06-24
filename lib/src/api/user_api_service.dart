@@ -43,27 +43,6 @@ class UserApiService {
   }
 
   static Future addBank(String bankKey) async {
-    // dynamic res;
-    // try {
-    //   String token = await AuthService.getToken();
-    //   res = await http.post(Uri.parse('$apiBaseUrl/user/add_bank'), body: {
-    //     "bankKey": bankKey
-    //   }, headers: {
-    //     // 'Content-Type': 'application/json',
-    //     'Accept': 'application/json',
-    //     'Authorization': 'Bearer $token',
-    //   });
-    // } catch (e) {
-    //   print(e.toString());
-    //   // throw Exception('Failed to add bank?');
-    // }
-    // return res;
-    // return http.post(Uri.parse('$apiBaseUrl/$url'), headers: {
-    //   'Content-Type': 'application/json',
-    //   'Accept': 'application/json',
-    //   'Authorization': 'Bearer $token',
-    // });
-
     final response = await AuthApiClient.authPost('user/add_bank', {
       "bankKey": bankKey,
     });
