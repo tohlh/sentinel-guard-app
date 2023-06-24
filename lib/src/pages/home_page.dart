@@ -33,8 +33,7 @@ class _HomePageState extends State<HomePage> {
               //   });
               // },
               controller: bankCommunicationKey,
-              decoration:
-                  const InputDecoration(hintText: ""),
+              decoration: const InputDecoration(hintText: ""),
             ),
             actions: <Widget>[
               MaterialButton(
@@ -53,15 +52,15 @@ class _HomePageState extends State<HomePage> {
                 child: const Text('OK'),
                 onPressed: () {
                   // setState(() {
-                    print(bankCommunicationKey.text);
-                    // codeDialog = valueText;
-                    try {
+                  print(bankCommunicationKey.text);
+                  // codeDialog = valueText;
+                  try {
                     UserApiService.addBank(bankCommunicationKey.text);
-                    } catch (err) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Failed to add bank")));
-                    }
-                    Navigator.pop(context);
+                  } catch (err) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Failed to add bank")));
+                  }
+                  Navigator.pop(context);
                   // });
                 },
               ),
@@ -93,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-                return const CircularProgressIndicator();
+                return const Text('Add a bank to get started');
               },
             ),
           ),
@@ -126,7 +125,10 @@ class _BankListItemState extends State<BankListItem> {
     return ListTile(
       onTap: () =>
           Navigator.pushNamed(context, '/bank', arguments: widget.bank),
-      leading: Icon(Icons.account_balance, color: customColor,),
+      leading: Icon(
+        Icons.account_balance,
+        color: customColor,
+      ),
       title: Text(widget.bank.name),
     );
   }
