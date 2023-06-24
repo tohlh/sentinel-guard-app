@@ -27,7 +27,7 @@ class _BankPageState extends State<BankPage> {
         child: FutureBuilder<List<Message>>(
           future: futureMessages,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
@@ -37,11 +37,10 @@ class _BankPageState extends State<BankPage> {
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
-            return CircularProgressIndicator();
+            return const Text('No messages yet');
           },
         ),
       ),
-      
     );
   }
 }
