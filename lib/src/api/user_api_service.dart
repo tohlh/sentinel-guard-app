@@ -27,6 +27,15 @@ class UserApiService {
     }
   }
 
+  static Future<List<Bank>> getBank(String bankCommunicationKey) async {
+    final response = await AuthApiClient.authGet('user/get_bank/$bankCommunicationKey');
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)['bank'];
+    } else {
+      throw Exception('Failed to get bank');
+    }
+  }
+
   static Future<List<Message>> getMessages(String bankCommunicationKey) async {
     final response =
         await AuthApiClient.authGet('user/get_messages/$bankCommunicationKey');
@@ -54,6 +63,17 @@ class UserApiService {
     final response = await AuthApiClient.authPatch('user/update_public_key', {
       "publicKey": publicKey,
     });
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update public key');
+    }
+  }
+
+  static Future deleteBank(String bankKey) async {
+    final response = await AuthApiClient.authDelete('user/remove_bank', {
+      "bankKey": bankKey,
+    });
+    print("delete");
 
     if (response.statusCode != 200) {
       throw Exception('Failed to update public key');

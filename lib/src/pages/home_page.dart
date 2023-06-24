@@ -55,12 +55,23 @@ class _HomePageState extends State<HomePage> {
                   print(bankCommunicationKey.text);
                   // codeDialog = valueText;
                   try {
-                    UserApiService.addBank(bankCommunicationKey.text);
+                    UserApiService.addBank(bankCommunicationKey.text)
+                    .then((value) {
+                      UserApiService.getBank(value);
+                    }).catchError((err)  {
+                      print(err);
+                      Navigator.pop(context);
+                      
+                      return null;
+                      
+                    });
+                    
                   } catch (err) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Failed to add bank")));
+                        Navigator.pop(context);
                   }
-                  Navigator.pop(context);
+                  
                   // });
                 },
               ),
@@ -83,11 +94,13 @@ class _HomePageState extends State<HomePage> {
               future: futureBanks,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return ListView.builder(
+                  return ListView.separated(
+                    padding: const EdgeInsets.all(8),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return BankListItem(bank: snapshot.data![index]);
                     },
+                    separatorBuilder: (BuildContext context, int index) => const Divider(),
                   );
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
@@ -125,9 +138,14 @@ class _BankListItemState extends State<BankListItem> {
     return ListTile(
       onTap: () =>
           Navigator.pushNamed(context, '/bank', arguments: widget.bank),
-      leading: Icon(
-        Icons.account_balance,
+      leading: Container(
+        padding: EdgeInsets.all(5),
+        // backgroundColor: customColor,
         color: customColor,
+        child: const Icon(
+          Icons.account_balance,
+          color: Colors.white,
+        ),
       ),
       title: Text(widget.bank.name),
     );

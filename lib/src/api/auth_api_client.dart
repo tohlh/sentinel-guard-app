@@ -41,4 +41,17 @@ class AuthApiClient {
       body: jsonEncode(data),
     );
   }
+
+  static Future authDelete(String url, data) async {
+    String token = await AuthService.getToken();
+    return http.delete(
+      Uri.parse('$apiBaseUrl/$url'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(data),
+    );
+  }
 }
