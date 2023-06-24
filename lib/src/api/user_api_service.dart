@@ -3,8 +3,6 @@ import 'package:sentinel_guard_app/src/api/auth_api_client.dart';
 import 'package:sentinel_guard_app/src/models/bank.dart';
 import 'package:sentinel_guard_app/src/models/message.dart';
 import 'package:sentinel_guard_app/src/models/user.dart';
-import 'package:sentinel_guard_app/src/auth/auth_service.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class UserApiService {
