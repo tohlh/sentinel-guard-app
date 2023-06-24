@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sentinel_guard_app/src/crypto_service.dart';
 import 'package:sentinel_guard_app/src/models/bank.dart';
 import 'package:sentinel_guard_app/src/api/user_api_service.dart';
 import 'package:string_to_color/string_to_color.dart';
@@ -11,6 +12,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    CryptoService.saveKeyPair();
+    super.initState();
+  }
+
   Future<List<Bank>> futureBanks = UserApiService.getBanksList();
   TextEditingController bankCommunicationKey = TextEditingController();
   Future<void> _displayTextInputDialog(BuildContext context) async {

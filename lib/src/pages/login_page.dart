@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sentinel_guard_app/src/crypto_service.dart';
 import '../auth/auth_api_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -54,9 +55,10 @@ class _LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      await AuthApiService.login(email.text, password.text).then(
-                          (value) =>
-                              Navigator.pushReplacementNamed(context, '/layout'));
+                      AuthApiService.login(email.text, password.text).then(
+                        (value) =>
+                            Navigator.pushReplacementNamed(context, '/layout'),
+                      );
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Login failed")));
@@ -70,11 +72,13 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('New user?'),
-                    TextButton(child: Text("Register"),
-                    onPressed: () => {
-                      // print("pressed!");
-                      Navigator.pushReplacementNamed(context, '/register')
-                    },)
+                    TextButton(
+                      child: Text("Register"),
+                      onPressed: () => {
+                        // print("pressed!");
+                        Navigator.pushReplacementNamed(context, '/register')
+                      },
+                    )
                   ],
                 ),
               ),
@@ -82,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text("Bank Login"),
                 onPressed: () => {
                   // print("pressed!")
-                    Navigator.pushReplacementNamed(context, '/login_bank')
+                  Navigator.pushReplacementNamed(context, '/login_bank')
                 },
               )
             ],
