@@ -23,8 +23,7 @@ class CryptoService {
     final publicKeyBytes = base64Decode(publicKey);
     final simplePublicKey =
         SimplePublicKey(publicKeyBytes, type: KeyPairType.x25519);
-    
-    // print(simplePublicKey);
+
     return SimpleKeyPairData(privateKeyBytes,
         publicKey: simplePublicKey, type: KeyPairType.x25519);
   }
@@ -36,7 +35,6 @@ class CryptoService {
       await getKeyPair();
     } catch (e) {
       // If the key pair doesn't exist, generate a new one
-      print("error");
       const storage = FlutterSecureStorage();
 
       final algorithm = X25519();
@@ -66,10 +64,6 @@ class CryptoService {
       Message encryptedMessage, String bankPublicKey) async {
     final keyPair = await getKeyPair();
     final algorithm = X25519();
-    print("encryptedMessage");
-    print(encryptedMessage.content);
-    print("bankPublicKey");
-    print(bankPublicKey);
     final sharedSecret = await algorithm.sharedSecretKey(
       keyPair: keyPair,
       remotePublicKey: SimplePublicKey(base64Decode(bankPublicKey),

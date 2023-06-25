@@ -73,7 +73,6 @@ class UserApiService {
     final response = await AuthApiClient.authDelete('user/remove_bank', {
       "bankKey": bankKey,
     });
-    print("delete");
 
     if (response.statusCode != 200) {
       throw Exception('Failed to update public key');

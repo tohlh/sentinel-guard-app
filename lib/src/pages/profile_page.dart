@@ -105,9 +105,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       ]),
                   child: Center(
                     child: GestureDetector(
-                      onTap: () {
-                        // print("tapped");
-                      },
                       child: const Text(
                         'Logout',
                         textAlign: TextAlign.left,

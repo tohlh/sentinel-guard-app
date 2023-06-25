@@ -102,7 +102,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextButton(
                     child: const Text("Login"),
                     onPressed: () => {
-                      // print("pressed!");
                       Navigator.pushReplacementNamed(context, '/login')
                     },
                   )

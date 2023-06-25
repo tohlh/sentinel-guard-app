@@ -73,7 +73,6 @@ class _LoginPageState extends State<LoginPage> {
                   TextButton(
                     child: const Text("Register"),
                     onPressed: () => {
-                      // print("pressed!");
                       Navigator.pushReplacementNamed(context, '/register')
                     },
                   )

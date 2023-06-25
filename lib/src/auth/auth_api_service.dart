@@ -60,21 +60,17 @@ class AuthApiService {
       AuthService.saveToken(token);
     } catch (e) {
       throw Exception('Failed to register');
-      // throw Exception(e);
     }
   }
 
   static Future loginBank(String username, String password) async {
     try {
-      // print(username);
-      // print(password);
       final res = await http.post(Uri.parse('$apiBaseUrl/auth/bank/login'),
           body: {"username": username, "password": password});
       final respondBody = jsonDecode(res.body);
       final token = respondBody['access_token'];
       AuthService.saveToken(token);
     } catch (e) {
-      // print(e.toString());
       throw Exception('Failed to login');
     }
   }
