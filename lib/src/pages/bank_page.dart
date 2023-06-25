@@ -17,29 +17,22 @@ class _BankPageState extends State<BankPage> {
   @override
   Widget build(BuildContext context) {
     final Bank currentBank = ModalRoute.of(context)!.settings.arguments as Bank;
-    print("currentBank");
-    print(currentBank.bankCommunicationKey);
     Future<List<Message>> futureMessages =
         UserApiService.getMessages(currentBank.bankCommunicationKey);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(currentBank.name),
-        flexibleSpace: GestureDetector(
-          onTap: () {
-            print("tapped");
-          },
-        ),
         actions: [
-        IconButton(
-          onPressed: () {
-            print("tapped button");
-          Navigator.pushNamed(context, '/bank_details', arguments: currentBank);
-          },
-          icon: Icon(Icons.more_horiz),
-          padding: EdgeInsets.all(10),
-        ),
-      ],
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/bank_details',
+                  arguments: currentBank);
+            },
+            icon: const Icon(Icons.more_horiz),
+            padding: const EdgeInsets.all(10),
+          ),
+        ],
       ),
       body: Center(
         child: FutureBuilder<List<Message>>(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sentinel_guard_app/src/crypto_service.dart';
 import 'package:sentinel_guard_app/src/models/bank.dart';
 import 'package:sentinel_guard_app/src/api/user_api_service.dart';
-import 'package:string_to_color/string_to_color.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,11 +26,6 @@ class _HomePageState extends State<HomePage> {
           return AlertDialog(
             title: const Text('Bank Communication Key'),
             content: TextField(
-              // onChanged: (value) {
-              //   setState(() {
-              //     // valueText = value;
-              //   });
-              // },
               controller: bankCommunicationKey,
               decoration: const InputDecoration(hintText: ""),
             ),
@@ -52,27 +46,20 @@ class _HomePageState extends State<HomePage> {
                 child: const Text('OK'),
                 onPressed: () {
                   // setState(() {
-                  print(bankCommunicationKey.text);
                   // codeDialog = valueText;
                   try {
                     UserApiService.addBank(bankCommunicationKey.text)
-                    .then((value) {
-                      UserApiService.getBank(value);
-                    }).catchError((err)  {
-                      print(err);
+                        .then((value) =>
+                            Navigator.pushReplacementNamed(context, '/layout'))
+                        .catchError((err) {
                       Navigator.pop(context);
-                      
                       return null;
-                      
                     });
-                    
                   } catch (err) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Failed to add bank")));
-                        Navigator.pop(context);
+                    Navigator.pop(context);
                   }
-                  
-                  // });
                 },
               ),
             ],
@@ -100,7 +87,8 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return BankListItem(bank: snapshot.data![index]);
                     },
-                    separatorBuilder: (BuildContext context, int index) => const Divider(),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(),
                   );
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
@@ -133,13 +121,12 @@ class BankListItem extends StatefulWidget {
 class _BankListItemState extends State<BankListItem> {
   @override
   Widget build(BuildContext context) {
-    Color customColor = ColorUtils.stringToColor(widget.bank.name);
-    print(customColor);
+    Color customColor = Colors.lightBlue;
     return ListTile(
       onTap: () =>
           Navigator.pushNamed(context, '/bank', arguments: widget.bank),
       leading: Container(
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         // backgroundColor: customColor,
         color: customColor,
         child: const Icon(

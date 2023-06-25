@@ -1,10 +1,6 @@
-import 'package:chat_bubbles/date_chips/date_chip.dart';
 import 'package:flutter/material.dart';
-import 'package:sentinel_guard_app/src/crypto_service.dart';
 import 'package:sentinel_guard_app/src/models/bank.dart';
-import 'package:sentinel_guard_app/src/models/message.dart';
 import 'package:sentinel_guard_app/src/api/user_api_service.dart';
-import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 
 class BankDetailsPage extends StatefulWidget {
   const BankDetailsPage({Key? key}) : super(key: key);
@@ -17,20 +13,9 @@ class _BankDetailsPageState extends State<BankDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final Bank currentBank = ModalRoute.of(context)!.settings.arguments as Bank;
-    print("currentBank");
-    print(currentBank.bankCommunicationKey);
-    Future<List<Message>> futureMessages =
-        UserApiService.getMessages(currentBank.bankCommunicationKey);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(currentBank.name),
-        flexibleSpace: GestureDetector(
-          onTap: () {
-            print("tapped");
-          },
-        ),
-        
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -38,37 +23,50 @@ class _BankDetailsPageState extends State<BankDetailsPage> {
           Center(
             child: Column(
               children: [
-                Text('User Communication Key'),
+                const Text(
+                  "Bank communication ID",
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(currentBank.bankCommunicationKey),
+                const SizedBox(
+                  height: 50,
+                ),
+                const Text(
+                  "Your communication ID",
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Text(
+                  "(Provide this to your bank to link your account)",
+                  style: TextStyle(fontSize: 14),
+                ),
                 Text(currentBank.userCommunicationKey),
               ],
             ),
           ),
           Container(
-            margin: EdgeInsets.all(100),
+            margin: const EdgeInsets.all(100),
             child: TextButton(
-              // onPressed: () {
-              //   print("hi");
-              // },
-              onPressed: (){
-                print("delete button");
-                try {
-                UserApiService.deleteBank(currentBank.bankCommunicationKey);
-                } catch (err) {
-                  print(err);
-                }
-                // Navigator.pop(context);
-                Navigator.pushNamed(context, '/layout');
-              }, 
-              child: const Text("Delete Bank"),
+              onPressed: () {
+                UserApiService.deleteBank(currentBank.bankCommunicationKey)
+                    .then((value) =>
+                        Navigator.pushReplacementNamed(context, '/layout'));
+              },
               style: TextButton.styleFrom(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.pink,
               ),
+              child: const Text("Delete Bank"),
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }

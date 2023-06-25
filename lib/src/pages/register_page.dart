@@ -73,7 +73,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
                   } else if (value != password.text) {
-                    print(value);
                     return 'Password does not match';
                   }
                   return null;
@@ -84,40 +83,34 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      await AuthApiService.register(name.text, email.text, password.text, cpassword.text).then((value) => Navigator.pushReplacementNamed(context, '/home'));
+                      await AuthApiService.register(name.text, email.text,
+                              password.text, cpassword.text)
+                          .then((value) =>
+                              Navigator.pushReplacementNamed(context, '/home'));
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Register failed"))
-                      );
+                          const SnackBar(content: Text("Register failed")));
                     }
-                  }, 
+                  },
                   child: const Text('Register'),
-                  ),
+                ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Have an account?'),
-                    TextButton(child: Text("Login"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Have an account?'),
+                  TextButton(
+                    child: const Text("Login"),
                     onPressed: () => {
                       // print("pressed!");
                       Navigator.pushReplacementNamed(context, '/login')
-                    },)
-                  ],
-                ),
+                    },
+                  )
+                ],
               ),
-        
-              TextButton(
-                child: Text("Bank Register"),
-                onPressed: () => {
-                  // print("pressed!")
-                    Navigator.pushReplacementNamed(context, '/register_bank')
-                },
-              )
             ],
-            )
           ),
+        ),
       ),
     );
   }

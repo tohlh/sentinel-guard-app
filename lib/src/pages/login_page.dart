@@ -66,28 +66,19 @@ class _LoginPageState extends State<LoginPage> {
                   child: const Text('Login'),
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('New user?'),
-                    TextButton(
-                      child: Text("Register"),
-                      onPressed: () => {
-                        // print("pressed!");
-                        Navigator.pushReplacementNamed(context, '/register')
-                      },
-                    )
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('New user?'),
+                  TextButton(
+                    child: const Text("Register"),
+                    onPressed: () => {
+                      // print("pressed!");
+                      Navigator.pushReplacementNamed(context, '/register')
+                    },
+                  )
+                ],
               ),
-              TextButton(
-                child: Text("Bank Login"),
-                onPressed: () => {
-                  // print("pressed!")
-                  Navigator.pushReplacementNamed(context, '/login_bank')
-                },
-              )
             ],
           ),
         ),
