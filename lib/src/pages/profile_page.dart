@@ -29,12 +29,19 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Scaffold(
           body: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FutureBuilder<User>(
                   future: futureUser,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Text(snapshot.data!.name);
+                      return Column(
+                        children: [
+                          Icon(Icons.account_circle, size: 80,),
+                          Text(snapshot.data!.name),
+                          Text(snapshot.data!.email)
+                        ],
+                      );
                     } else if (snapshot.hasError) {
                       return Text('${snapshot.error}');
                     }
@@ -43,6 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 ),
                 ElevatedButton(
+                  // style: ButtonStyle(padding: ),
                   onPressed: () async {
                     try {
                       await AuthApiService.logout().then((value) =>
