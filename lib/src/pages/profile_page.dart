@@ -24,10 +24,19 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        // decoration: BoxDecoration(
+        //     gradient: LinearGradient(
+        //       begin: Alignment.topRight,
+        //       end: Alignment.bottomLeft,
+        //       colors: [
+        //         Colors.blue,
+        //         Colors.red,
+        //       ],
+        //     )
+        //   ),
         alignment: Alignment.center,
         padding: const EdgeInsets.all(32),
-        child: Scaffold(
-          body: Center(
+        child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -35,11 +44,31 @@ class _ProfilePageState extends State<ProfilePage> {
                   future: futureUser,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Column(
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Icon(Icons.account_circle, size: 80,),
-                          Text(snapshot.data!.name),
-                          Text(snapshot.data!.email)
+                          Icon(Icons.account_circle, size: 80, 
+                          // color: Colors.white,
+                          ),
+                          
+                          Column(
+                            children: [
+                              
+                              Text(snapshot.data!.name,
+                              style: TextStyle(
+                                fontSize: 48.0,
+                                fontWeight: FontWeight.bold,
+                                // color: Colors.white,
+                              ),
+                              ),
+                              Text(snapshot.data!.email, 
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                // color: Colors.white,
+                              ),)
+                            ],
+                          ),
                         ],
                       );
                     } else if (snapshot.hasError) {
@@ -65,7 +94,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-        ),
       ),
     );
   }
