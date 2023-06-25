@@ -40,7 +40,7 @@ class _LayoutState extends State<Layout> {
             label: 'Profile',
           ),
         ],
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.blue[400],
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
       ),

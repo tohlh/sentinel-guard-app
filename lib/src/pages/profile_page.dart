@@ -44,31 +44,27 @@ class _ProfilePageState extends State<ProfilePage> {
                   future: futureUser,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      return Column(
                         children: [
                           Icon(Icons.account_circle, size: 80, 
                           // color: Colors.white,
                           ),
-                          
-                          Column(
-                            children: [
-                              
-                              Text(snapshot.data!.name,
-                              style: TextStyle(
-                                fontSize: 48.0,
-                                fontWeight: FontWeight.bold,
-                                // color: Colors.white,
-                              ),
-                              ),
-                              Text(snapshot.data!.email, 
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                // color: Colors.white,
-                              ),)
-                            ],
+                          SizedBox(
+                            height: 20, // <-- SEE HERE
                           ),
+                          Text(snapshot.data!.name,
+                          style: TextStyle(
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.bold,
+                            // color: Colors.white,
+                          ),
+                          ),
+                          Text(snapshot.data!.email, 
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            // color: Colors.white,
+                          ),)
                         ],
                       );
                     } else if (snapshot.hasError) {
@@ -78,9 +74,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     return const CircularProgressIndicator();
                   },
                 ),
-                ElevatedButton(
-                  // style: ButtonStyle(padding: ),
-                  onPressed: () async {
+                SizedBox(
+                  height: 250, 
+                ),
+                GestureDetector(
+                  onTap: () async {
                     try {
                       await AuthApiService.logout().then((value) =>
                           Navigator.pushReplacementNamed(context, '/login'));
@@ -89,8 +87,67 @@ class _ProfilePageState extends State<ProfilePage> {
                           content: Text("Something went wrong!")));
                     }
                   },
-                  child: const Text('Logout'),
+                  
+                  child: Container(
+                  
+                  height: 60,
+                  // width: 200,
+                  decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                  colors: [
+                    // Color.fromRGBO(255, 143, 158, 1),
+                    // Color.fromRGBO(255, 188, 143, 1),
+                    Colors.blue,
+                    Colors.purple
+                  ],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                              ),
+                              borderRadius: const BorderRadius.all(
+                  Radius.circular(20.0),
+                              ),
+                              boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.2),
+                    spreadRadius: 4,
+                    blurRadius: 10,
+                    offset: Offset(0, 3),
+                  )
+                              ]
+                            ),
+                            child: Center(
+                              child: GestureDetector(
+                  onTap: () {
+                    // print("tapped");
+                  },
+                  child: const Text(
+                    'Logout',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      // fontFamily: "Netflix",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      letterSpacing: 0.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                              ),
+                            ),
+                          ),
                 ),
+                // ElevatedButton(
+                //   // style: ButtonStyle(padding: ),
+                  // onPressed: () async {
+                  //   try {
+                  //     await AuthApiService.logout().then((value) =>
+                  //         Navigator.pushReplacementNamed(context, '/login'));
+                  //   } catch (e) {
+                  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  //         content: Text("Something went wrong!")));
+                  //   }
+                  // },
+                //   child: const Text('Logout'),
+                // ),
               ],
             ),
           ),
