@@ -27,15 +27,6 @@ class UserApiService {
     }
   }
 
-  static Future<List<Bank>> getBank(String bankCommunicationKey) async {
-    final response = await AuthApiClient.authGet('user/get_bank/$bankCommunicationKey');
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body)['bank'];
-    } else {
-      throw Exception('Failed to get bank');
-    }
-  }
-
   static Future<List<Message>> getMessages(String bankCommunicationKey) async {
     final response =
         await AuthApiClient.authGet('user/get_messages/$bankCommunicationKey');
